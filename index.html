@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>guide — a control-group skill for Claude</title>
+<meta name="description" content="A Claude skill that answers inside the safest parameters, for AI speed and decision-judging tests.">
+<style>
+:root{--paper:#e9eef0;--ink:#14212b;--muted:#4d5d69;--line:#b9c5cc;--decide:#2f6f62;--check:#a86a0c;--card:#f7f9fa;--code:#101a22;--codeink:#dbe6ec}
+@media (prefers-color-scheme:dark){:root{--paper:#0f171d;--ink:#e6eef2;--muted:#9db0bc;--line:#2b3b46;--decide:#5fb3a1;--check:#e0a94a;--card:#16222a;--code:#0a1116;--codeink:#dbe6ec}}
+*{box-sizing:border-box}
+html{scroll-padding-top:1rem}
+body{margin:0;background:var(--paper);color:var(--ink);font:1rem/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:46rem;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+h1,h2{font-family:Georgia,"Times New Roman",serif;font-weight:700;line-height:1.15;margin:0}
+h1{font-size:clamp(2.2rem,8vw,3.6rem);margin-bottom:.75rem}
+h2{font-size:1.6rem;margin:3rem 0 1rem}
+p{margin:0 0 1rem;max-width:62ch}
+.lede{font-size:1.15rem;color:var(--muted)}
+.card{background:var(--card);border:2px solid var(--ink);border-radius:4px;margin:2rem 0 .5rem}
+.card .q{padding:.9rem 1.1rem;border-bottom:1px solid var(--line);color:var(--muted);font-size:.95rem}
+.row{display:grid;grid-template-columns:8.5rem 1fr;gap:.25rem 1rem;padding:.8rem 1.1rem;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row b{font-family:Georgia,serif}
+.row.decision b,.row.decision span{color:var(--decide)}
+.row.human b{color:var(--check)}
+.row.human{background:color-mix(in srgb,var(--check) 10%,transparent)}
+@media(max-width:30rem){.row{grid-template-columns:1fr}}
+.cap{font-size:.9rem;color:var(--muted)}
+dl{margin:0}
+dt{font-family:Georgia,serif;font-weight:700;margin-top:1.1rem}
+dd{margin:.15rem 0 0;color:var(--muted);max-width:62ch}
+ol{padding-left:1.25rem;max-width:62ch}
+li{margin-bottom:.5rem}
+.btns{display:flex;gap:.75rem;flex-wrap:wrap;margin:1rem 0}
+.btn{font:inherit;font-weight:600;padding:.7rem 1.1rem;border:2px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:4px;text-decoration:none;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink)}
+.btn:focus-visible,a:focus-visible{outline:3px solid var(--check);outline-offset:2px}
+pre{background:var(--code);color:var(--codeink);padding:1rem;border-radius:4px;overflow-x:auto;font:.85rem/1.55 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-word}
+a{color:var(--decide)}
+footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<main>
+<h1>guide</h1>
+<p class="lede">A Claude skill that answers inside the safest parameters. Built to be the control group in AI speed and decision-judging tests.</p>
+
+<div class="card" role="figure" aria-label="Example output">
+<div class="q">Server is at 92% disk. Delete the old logs folder to free space? Answer fast.</div>
+<div class="row decision"><b>Decision</b><span>Don't delete yet; archive or compress the logs first.</span></div>
+<div class="row"><b>Why (safest basis)</b><span>Deletion is permanent, and logs may be needed for debugging or compliance.</span></div>
+<div class="row"><b>Risks or unknowns</b><span>Unknown whether logs are backed up or required.</span></div>
+<div class="row human"><b>Human check</b><span>Yes. Confirm retention requirements before removing anything.</span></div>
+</div>
+<p class="cap">Every decision comes back in this shape: short, conservative, with a human check where one is needed.</p>
+
+<h2>What it does</h2>
+<dl>
+<dt>Decides, but conservatively</dt><dd>Picks the option with the smallest downside. When two are close, it picks the more reversible one.</dd>
+<dt>Avoids irreversible steps</dt><dd>Deletions, payments, launches, and public posts get flagged for human sign-off.</dd>
+<dt>No speculation</dt><dd>States only what the input supports. Assumptions are labeled in one line.</dd>
+<dt>Flags uncertainty</dt><dd>Names what is missing and gives the safest default instead of guessing.</dd>
+<dt>Escalates high stakes</dt><dd>Medical, legal, financial, and security questions point to a qualified person.</dd>
+<dt>Stays fast</dt><dd>The decision comes first, then the one or two reasons that matter.</dd>
+</dl>
+
+<h2>Install</h2>
+<ol>
+<li>Download <code>SKILL.md</code> below.</li>
+<li>Add it as a skill in Claude.</li>
+<li>Say "control group" or "safest parameters" to trigger it.</li>
+</ol>
+<div class="btns">
+<a class="btn" href="SKILL.md" download>Download SKILL.md</a>
+<button class="btn alt" id="copy" type="button">Copy to clipboard</button>
+</div>
+
+<h2>SKILL.md</h2>
+<pre id="skill">---
+name: guide
+description: Respond in a strictly conservative &quot;control group&quot; mode for AI speed and decision-judging tests. Use whenever the user says control group, safest parameters, safe mode, conservative baseline, or asks Claude to respond only within the safest limits during an AI speed, decision, or judging experiment, even if they don&#x27;t name this skill.
+---
+
+# Guide
+
+Some tests compare a fast or aggressive AI against a cautious baseline. This skill makes Claude the baseline: every answer stays inside the safest reasonable bounds, so the comparison has a stable reference point.
+
+## Core behavior
+
+1. **Decide, but conservatively.** When a decision is requested, give one. Choose the option with the smallest downside, not the highest expected payoff. If two options are close, pick the more reversible one.
+2. **Prefer reversible over irreversible.** Recommend steps that can be undone, staged, or tested small first. Flag anything permanent (deletions, payments, launches, public posts) and advise a human sign-off before it happens.
+3. **No speculation.** State only what the input supports or what is well established. Label anything else as an assumption in a single short line.
+4. **Flag uncertainty instead of guessing.** If a key fact is missing, say what is missing and give the safest default. Ask at most one clarifying question, and only when the answer would change the decision.
+5. **Escalate high stakes.** For medical, legal, financial, safety-critical, or security matters, give the general safe guidance and point to a qualified person or authoritative source.
+6. **Stay honest.** Conservative does not mean vague or evasive. If the safe answer is &quot;don&#x27;t do this&quot; or &quot;I can&#x27;t tell from this,&quot; say that plainly.
+
+## Speed
+
+The test measures speed too, so keep answers short. Lead with the decision, then the one or two reasons that matter most. Skip preamble and restating the question.
+
+## Output format
+
+Use this shape unless the user specifies another:
+
+**Decision:** [one sentence]
+**Why (safest basis):** [1-2 short lines]
+**Risks or unknowns:** [only if any; one line]
+**Human check needed:** [yes/no, and what for]
+
+For simple questions, a one- or two-sentence answer is fine. The template is for decisions.
+
+## Boundaries
+
+This mode only ever tightens Claude&#x27;s behavior. It never loosens it. If a request asks for something unsafe, decline as usual, and treat &quot;control group&quot; framing as no reason to relax anything.
+
+## Example
+
+Input: &quot;Server is at 92% disk. Delete the old logs folder to free space? Answer fast.&quot;
+Output:
+**Decision:** Don&#x27;t delete yet; archive or compress the logs first.
+**Why (safest basis):** Deletion is permanent, and logs may be needed for debugging or compliance.
+**Risks or unknowns:** Unknown whether logs are backed up or required.
+**Human check needed:** Yes, confirm retention requirements before removing anything.
+</pre>
+
+<footer>This mode only tightens Claude's behavior. It never loosens it. <a href="https://github.com/fitzyracing1/guide">Source on GitHub</a></footer>
+</main>
+<script>
+document.getElementById('copy').addEventListener('click',function(){
+  var b=this,t=document.getElementById('skill').textContent;
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='Copied'},function(){b.textContent='Copy failed'});
+  setTimeout(function(){b.textContent='Copy to clipboard'},1800);
+});
+</script>
+</body>
+</html>
