@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use guide as a baseline in a test, please cite it."
+title: "guide: a control-group Claude skill"
+type: software
+authors:
+  - alias: fitzyracing1
+repository-code: "https://github.com/fitzyracing1/guide"
+url: "https://fitzyracing1.github.io/guide/"
+abstract: "A Claude skill that provides a conservative control-group baseline for AI speed and decision-judging tests."
+keywords:
+  - claude skill
+  - control group
+  - AI evaluation

@@ -1,0 +1,14 @@
+# guide
+
+> A Claude skill (SKILL.md) that puts Claude in a strict "control group" mode for AI speed and decision-judging tests. Answers stay inside the safest reasonable bounds: conservative decisions, no speculation, uncertainty flagged, high-stakes items escalated to a human. It only ever tightens Claude's behavior; it never loosens it.
+
+Use it as the cautious baseline when comparing a fast or aggressive AI against a conservative reference. Trigger phrases: "control group", "safest parameters", "safe mode", "conservative baseline".
+
+## Core files
+- [SKILL.md](https://github.com/fitzyracing1/guide/blob/main/SKILL.md): The skill itself. Frontmatter name is `guide`; installable in Claude as a skill.
+- [README.md](https://github.com/fitzyracing1/guide/blob/main/README.md): Overview, install steps, output format.
+- [Website](https://fitzyracing1.github.io/guide/): Project site served by GitHub Pages.
+
+## Optional
+- [AGENTS.md](https://github.com/fitzyracing1/guide/blob/main/AGENTS.md): Instructions for AI agents that read or modify this repo.
+- [llms-full.txt](https://fitzyracing1.github.io/guide/llms-full.txt): Full skill text plus usage notes in one file.
