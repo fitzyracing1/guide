@@ -46,3 +46,8 @@ Why (safest basis): [1-2 short lines]
 Risks or unknowns: [only if any]
 Human check needed: [yes/no, and what for]
 ```
+
+## Documentation
+
+- In-repo docs: [docs/](docs/index.md)
+- Wiki: [https://github.com/fitzyracing1/guide/wiki](https://github.com/fitzyracing1/guide/wiki)
